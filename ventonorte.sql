@@ -1,11 +1,30 @@
---
--- PostgreSQL database dump
---
+/*----------------------------------------------------------------------------
+BANCO DE DADOS VENTO NORTE
 
--- Dumped from database version 16.6 (Ubuntu 16.6-1.pgdg20.04+1)
--- Dumped by pg_dump version 16.6
+Esse banco é uma versão traduzida e convertida para o PostgresSQL do famoso 
+banco "Northwind Traders" criado pela Microsoft para treinamento dos seus 
+bancos de dados (Access, MS SQL Server).
 
--- Started on 2025-02-05 22:13:18
+A EMPRESA
+
+A empresa "Vento Norte" é ume empresa fictícia que comercializa especialidades 
+culinárias do mundo inteiro para distribuidores espalhados pelo mundo.
+
+SOBRE A TRADUÇÃO/ADAPTAÇÃO
+
+Essa tradução foi feita pelo prof. Carlos H Correia (chcorreia@gmail.com)
+para ser usada como ferramenta de auxílio nas aulas de Banco de Dados em
+conjunto com aulas preparadas em Notebooks Jupyter que podem ser executados
+na plataforma Google Colaboratory.
+
+Fonte: https://github.com/chcorreia/VentoNorte
+
+ONDE ENCONTRAR O BANCO ORIGINAL
+
+Esse trabalho foi baseado na versão do banco Northwind Traders para PostgreSQL 
+que pode ser encontrada em https://github.com/pthom/northwind_psql.
+
+----------------------------------------------------------------------------*/
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -155,7 +174,7 @@ CREATE TABLE public.pedido (
     id_vendedor integer,
     data_pedido date,
     data_prometido date,
-    data_envio date,
+    data_enviado date,
     id_transp integer,
     valor_frete numeric(8,2),
     envio_nome character varying(40),
@@ -267,7 +286,7 @@ CREATE VIEW public.pedido_total AS
     p.id_vendedor,
     p.data_pedido,
     p.data_prometido,
-    p.data_envio,
+    p.data_enviado,
     p.id_transp AS transp_id,
     p.valor_frete,
     p.envio_nome,
