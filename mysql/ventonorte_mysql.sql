@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------
-BANCO DE DADOS VENTO NORTE
+BANCO DE DADOS VENTO NORTE - VERSÃO MySQL
 
-Esse banco é uma versão traduzida e convertida para o PostgresSQL do famoso 
+Esse banco é uma versão traduzida e convertida para o MySQL do famoso 
 banco "Northwind Traders" criado pela Microsoft para treinamento dos seus 
 bancos de dados (Access, MS SQL Server).
 
@@ -19,38 +19,25 @@ na plataforma Google Colaboratory.
 
 Fonte: https://github.com/chcorreia/VentoNorte
 
-ONDE ENCONTRAR O BANCO ORIGINAL
+ONDE ENCONTRAR O BANCO ORIGINAL EM INGLÊS
 
-Esse trabalho foi baseado na versão do banco Northwind Traders para PostgreSQL 
-que pode ser encontrada em https://github.com/pthom/northwind_psql.
+A versão oficial da Microsoft encontra sem
+https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/readme.md
+
+Uma versão em Inglês do banco Nortwind Traders para MySQL pode ser encontrada em
+https://github.com/dalers/mywind
 
 ----------------------------------------------------------------------------*/
 
---
--- Essas opções vieram do original e deixei inalteradas
---
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
+------------------------------------------------------------------------------
+-- Se você quiser que esse banco seja criado em um DATABASE específico
+-- só remova os comentários abaixo e altere o nome aqui. 
+------------------------------------------------------------------------------
+-- CREATE DATABASE IF NOT EXISTS ventonorte;
+-- USE ventonorte;
+------------------------------------------------------------------------------
 
--- 
--- Se você quiser que esse banco seja criado em um SCHEMA específico
--- só precisa alterar aqui. Removi todas as referências explícitas ao
--- schema 'public' no resto do script.
---
-
-CREATE SCHEMA IF NOT EXISTS public;
-ALTER SCHEMA public OWNER TO pg_database_owner;
-COMMENT ON SCHEMA public IS 'standard public schema';
-SET SCHEMA 'public';
-
-
-SET default_tablespace = '';
-SET default_table_access_method = heap;
 
 ------------------------------------------------------------------------------
 -- TABELAS
@@ -63,17 +50,17 @@ SET default_table_access_method = heap;
 
 DROP TABLE IF EXISTS cliente;
 CREATE TABLE cliente ( -- nome original: "Customers"
-    id character varying(5) NOT NULL PRIMARY KEY,
-    empresa character varying(40) NOT NULL,
-    nome_contato character varying(40),
-    titulo_contato character varying(40),
-    endereco character varying(60),
-    cidade character varying(30),
-    regiao character varying(30),
-    cod_postal character varying(10),
-    pais character varying(30),
-    fone1 character varying(24),
-    fone2 character varying(24)
+    id VARCHAR(5) NOT NULL PRIMARY KEY, 
+    empresa VARCHAR(40) NOT NULL,
+    nome_contato VARCHAR(40),
+    titulo_contato VARCHAR(40),
+    endereco VARCHAR(60),
+    cidade VARCHAR(30),
+    regiao VARCHAR(30),
+    cod_postal VARCHAR(10),
+    pais VARCHAR(30),
+    fone1 VARCHAR(24),
+    fone2 VARCHAR(24)
 );
 
 
@@ -83,18 +70,18 @@ CREATE TABLE cliente ( -- nome original: "Customers"
 
 DROP TABLE IF EXISTS fornecedor;
 CREATE TABLE fornecedor ( -- nome original: "Suppliers"
-    id integer NOT NULL PRIMARY KEY,
-    empresa character varying(40) NOT NULL,
-    nome_contato character varying(40),
-    titulo_contato character varying(40),
-    endereco character varying(60),
-    cidade character varying(30),
-    regiao character varying(30),
-    cod_postal character varying(10),
-    pais character varying(30),
-    fone1 character varying(24),
-    fone2 character varying(24),
-    website text
+    id INT NOT NULL PRIMARY KEY,
+    empresa VARCHAR(40) NOT NULL,
+    nome_contato VARCHAR(40),
+    titulo_contato VARCHAR(40),
+    endereco VARCHAR(60),
+    cidade VARCHAR(30),
+    regiao VARCHAR(30),
+    cod_postal VARCHAR(10),
+    pais VARCHAR(30),
+    fone1 VARCHAR(24),
+    fone2 VARCHAR(24),
+    website TEXT 
 );
 
 --
@@ -103,36 +90,38 @@ CREATE TABLE fornecedor ( -- nome original: "Suppliers"
 
 DROP TABLE IF EXISTS vendedor;
 CREATE TABLE vendedor ( -- nome original: "Employees"
-    id integer NOT NULL PRIMARY KEY,
-    titulo character varying(40),
-    titulo_de_cortesia character varying(25),
-    data_nasc date,
-    data_contrato date,
-    endereco character varying(60),
-    cidade character varying(30),
-    regiao character varying(30),
-    cod_postal character varying(10),
-    pais character varying(30),
-    fone character varying(24),
-    ramal character varying(4),
-    foto bytea,
-    obs text,
-    id_chefe integer REFERENCES vendedor,
-    foto_arq character varying(255),
-    nome character varying(100)
+    id INT NOT NULL PRIMARY KEY,
+    titulo VARCHAR(40),
+    titulo_de_cortesia VARCHAR(25),
+    data_nasc DATE, 
+    data_contrato DATE, 
+    endereco VARCHAR(60),
+    cidade VARCHAR(30),
+    regiao VARCHAR(30),
+    cod_postal VARCHAR(10),
+    pais VARCHAR(30),
+    fone VARCHAR(24),
+    ramal VARCHAR(4),
+    foto MEDIUMBLOB, 
+    obs TEXT, 
+    id_chefe INT,
+    foto_arq VARCHAR(255),
+    nome VARCHAR(100),
+    FOREIGN KEY (id_chefe) REFERENCES vendedor(id) 
 );
 
 DROP TABLE IF EXISTS regiao;
 CREATE TABLE regiao ( -- nome original: "Region"
-    id integer NOT NULL PRIMARY KEY,
-    descricao character varying(60) NOT NULL
+    id INT NOT NULL PRIMARY KEY,
+    descricao VARCHAR(60) NOT NULL
 );
 
 DROP TABLE IF EXISTS area;
 CREATE TABLE area ( -- nome original: "Territories"
-    id numeric(6) NOT NULL PRIMARY KEY,
-    area character varying(60) NOT NULL,
-    id_regiao integer NOT NULL REFERENCES regiao
+    id DECIMAL(6,0) NOT NULL PRIMARY KEY,
+    area VARCHAR(60) NOT NULL,
+    id_regiao INT NOT NULL, 
+    FOREIGN KEY (id_regiao) REFERENCES regiao(id) 
 );
 
 --
@@ -142,9 +131,11 @@ CREATE TABLE area ( -- nome original: "Territories"
 
 DROP TABLE IF EXISTS area_vendedor;
 CREATE TABLE area_vendedor ( -- nome original: "EmployeeTerritories"
-    id_vendedor integer NOT NULL REFERENCES vendedor,
-    id_area numeric(6) NOT NULL REFERENCES area,
-	PRIMARY KEY(id_vendedor, id_area)
+    id_vendedor INT NOT NULL,
+    id_area DECIMAL(6,0) NOT NULL, 
+    PRIMARY KEY(id_vendedor, id_area),
+    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id), 
+    FOREIGN KEY (id_area) REFERENCES area(id) 
 );
 
 
@@ -154,24 +145,26 @@ CREATE TABLE area_vendedor ( -- nome original: "EmployeeTerritories"
 
 DROP TABLE IF EXISTS categoria;
 CREATE TABLE categoria ( -- nome original: "Categories"
-    id integer NOT NULL PRIMARY KEY,
-    categoria character varying(30) NOT NULL,
-    descricao text,
-    imagem bytea
+    id INT NOT NULL PRIMARY KEY,
+    categoria VARCHAR(30) NOT NULL,
+    descricao TEXT, 
+    imagem MEDIUMBLOB 
 );
 
 DROP TABLE IF EXISTS produto;
 CREATE TABLE produto ( -- nome original: "Products"
-    id integer NOT NULL PRIMARY KEY,
-    produto character varying(40) NOT NULL,
-    id_fornecedor integer REFERENCES fornecedor,
-    id_categoria integer REFERENCES categoria,
-    quant_por_unid character varying(30),
-    preco_unid numeric(8,2),
-    unids_estoque integer,
-    unids_pedido integer,
-    estoque_min integer,
-    esgotado boolean NOT NULL default 'false'
+    id INT NOT NULL PRIMARY KEY,
+    produto VARCHAR(40) NOT NULL,
+    id_fornecedor INT,
+    id_categoria INT,
+    quant_por_unid VARCHAR(30),
+    preco_unid DECIMAL(8,2), 
+    unids_estoque INT,
+    unids_pedido INT,
+    estoque_min INT,
+    esgotado BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id), 
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id) 
 );
 
 --
@@ -180,9 +173,9 @@ CREATE TABLE produto ( -- nome original: "Products"
 
 DROP TABLE IF EXISTS transportadora; -- nome original: "Shippers"
 CREATE TABLE transportadora (
-    id integer NOT NULL PRIMARY KEY,
-    transportadora character varying(40) NOT NULL,
-    fone character varying(24)
+    id INT NOT NULL PRIMARY KEY,
+    transportadora VARCHAR(40) NOT NULL,
+    fone VARCHAR(24)
 );
 
 --
@@ -191,20 +184,23 @@ CREATE TABLE transportadora (
 
 DROP TABLE IF EXISTS pedido;
 CREATE TABLE pedido ( -- nome original: "Orders"
-    id integer NOT NULL PRIMARY KEY,
-    id_cliente character varying(5) REFERENCES cliente,
-    id_vendedor integer REFERENCES vendedor,
-    data_pedido date,
-    data_prometido date,
-    data_enviado date,
-    id_transp integer REFERENCES transportadora,
-    valor_frete numeric(8,2),
-    envio_nome character varying(40),
-    envio_endereco character varying(60),
-    envio_cidade character varying(30),
-    envio_regiao character varying(30),
-    envio_cod_postal character varying(10),
-    envio_pais character varying(30)
+    id INT NOT NULL PRIMARY KEY,
+    id_cliente VARCHAR(5), 
+    id_vendedor INT,
+    data_pedido DATE, 
+    data_prometido DATE, 
+    data_enviado DATE, 
+    id_transp INT,
+    valor_frete DECIMAL(8,2), 
+    envio_nome VARCHAR(40),
+    envio_endereco VARCHAR(60),
+    envio_cidade VARCHAR(30),
+    envio_regiao VARCHAR(30),
+    envio_cod_postal VARCHAR(10),
+    envio_pais VARCHAR(30),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id), 
+    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id), 
+    FOREIGN KEY (id_transp) REFERENCES transportadora(id) 
 );
 
 --
@@ -212,13 +208,15 @@ CREATE TABLE pedido ( -- nome original: "Orders"
 -- Essa tabela tem uma chave composta
 --
 DROP TABLE IF EXISTS item_pedido;
-CREATE TABLE item_pedido ( -- nome original: "OrderDetails"
-    id_pedido integer NOT NULL REFERENCES pedido,
-    id_produto integer NOT NULL REFERENCES produto,
-    preco_unit numeric(8,2) NOT NULL,
-    quant integer NOT NULL,
-    perc_desconto real NOT NULL,
-	PRIMARY KEY(id_pedido, id_produto)
+CREATE TABLE item_pedido (
+    id_pedido INT NOT NULL,
+    id_produto INT NOT NULL,
+    preco_unit DECIMAL(8,2) NOT NULL,
+    quant INT NOT NULL,
+    perc_desconto FLOAT NOT NULL,
+    PRIMARY KEY(id_pedido, id_produto),
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id),
+    FOREIGN KEY (id_produto) REFERENCES produto(id)
 );
 
 
@@ -3610,7 +3608,7 @@ INSERT INTO item_pedido VALUES (11077, 77, 13.00, 2, 0);
 --
 
 /*-----------------------------------------------------------------------------
-procedure AJUSTAR_DATAS(data_base)
+PROCEDURE AJUSTAR_DATAS(data_base)
 
 Ajusta as datas do banco de dados para um dia específico.
 É executada com o valor CURRENT_DATE no script de criação do banco.
@@ -3628,52 +3626,47 @@ autor: Carlos H Correia - SENAI Pato Branco
 fonte: https://github.com/profcarlos-senai/VentoNorte/
 -----------------------------------------------------------------------------*/
 
-CREATE OR REPLACE PROCEDURE ajusta_datas(data_base DATE)
-LANGUAGE plpgsql
-AS $$
-DECLARE
-    max_data DATE;
-    dias_dif INTEGER;
+DELIMITER // -- Define o delimitador para evitar conflito com o ponto e vírgula dentro da procedure
+
+CREATE PROCEDURE ajusta_datas(data_base DATE)
 BEGIN
+    DECLARE max_data DATE;
+    DECLARE dias_dif INT; -- INTEGER em MySQL é INT
 
-	IF data_base is null THEN
-		data_base = CURRENT_DATE;
-	END IF;
-
+    IF data_base IS NULL THEN
+        SET data_base = CURRENT_DATE(); -- CURRENT_DATE em MySQL é CURRENT_DATE()
+    END IF;
 
     -- Obtém a data do pedido mais recente
-    SELECT MAX(data_pedido) 
-    INTO max_data 
-    FROM pedido;
+    SELECT MAX(data_pedido) INTO max_data FROM pedido;
 
     -- Calcula a diferença em dias entre a data mais recente e hoje
     IF max_data IS NOT NULL THEN
-        dias_dif := CURRENT_DATE - max_data;
+        SET dias_dif = DATEDIFF(CURRENT_DATE(), max_data); -- Função DATEDIFF para calcular a diferença em dias
 
         -- Ajusta os pedidos pela diferença calculada
         UPDATE pedido
-        SET data_pedido = data_pedido + dias_dif,
-            data_prometido = data_prometido + dias_dif,
-            data_enviado = data_enviado + dias_dif;
-			
-		-- Atualiza os vendedores
-		UPDATE vendedor
-		SET data_nasc = data_nasc + dias_dif,
-		data_contrato = data_contrato + dias_dif;
-		
-		-- Uhul
-        RAISE NOTICE 'Pedido mais recente ajustado para %. Todas as datas foram atualizadas.', data_base;
+        SET data_pedido = DATE_ADD(data_pedido, INTERVAL dias_dif DAY), -- DATE_ADD para adicionar dias
+            data_prometido = DATE_ADD(data_prometido, INTERVAL dias_dif DAY),
+            data_enviado = DATE_ADD(data_enviado, INTERVAL dias_dif DAY);
+
+        -- Atualiza os vendedores
+        UPDATE vendedor
+        SET data_nasc = DATE_ADD(data_nasc, INTERVAL dias_dif DAY),
+            data_contrato = DATE_ADD(data_contrato, INTERVAL dias_dif DAY);
+
+        -- Uhul
+        SELECT CONCAT('Pedido mais recente ajustado para ', data_base, '. Todas as datas foram atualizadas.'); -- RAISE NOTICE em MySQL é substituído por SELECT CONCAT
     ELSE
-        RAISE NOTICE 'Nenhum pedido encontrado. Nenhuma atualização realizada.';
+        SELECT 'Nenhum pedido encontrado. Nenhuma atualização realizada.'; -- RAISE NOTICE em MySQL é substituído por SELECT
     END IF;
-END;
-$$;
+END // -- Fim da procedure
+
+DELIMITER ; -- Volta ao delimitador padrão
 
 -- AJUSTA AS DATAS PARA A DATA DA INSTALAÇÃO
-call ajusta_datas(CURRENT_DATE);
-
+CALL ajusta_datas(CURRENT_DATE()); -- Para chamar a procedure em MySQL, use CALL
 
 --
--- FIM DO BANCO VENTONORTE.SQL
--- (você perdeu o jogo)
+-- FIM
 --

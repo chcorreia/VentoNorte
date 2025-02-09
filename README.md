@@ -1,10 +1,37 @@
 # VentoNorte
 
-Esse banco é uma versão traduzida e convertida para o PostgresSQL do famoso banco "Northwind Traders" criado pela Microsoft para treinamento dos seus bancos de dados (Access, MS SQL Server).
+Esse banco é uma versão traduzida e convertida para o PostgresSQL do famoso 
+banco "Northwind Traders" criado pela Microsoft para treinamento dos seus 
+bancos de dados (Access, MS SQL Server).
 
-A empresa "Vento Norte" de comércio é especializada em comerciar especialidades culinárias do mundo direto para a sua casa! Esse banco registra pedidos de compras que ligam clientes e fornecedores de vários lugares do planeta.
+## A EMPRESA
 
-A tradução e adaptação, ainda está em andamento, então nomes de campos e valores dos dados ainda podem alterar até esse repositório estabilizar.
+A empresa "Vento Norte" é ume empresa fictícia que comercializa especialidades 
+culinárias do mundo inteiro para distribuidores espalhados pelo mundo.
 
-Uma cópia em Inglês do banco Northwind Traders para PostgreSQL pode ser encontrada em https://github.com/pthom/northwind_psql.
+## SOBRE A TRADUÇÃO/ADAPTAÇÃO
+
+Essa tradução foi feita pelo prof. Carlos H Correia (chcorreia@gmail.com)
+para ser usada como ferramenta de auxílio nas aulas de Banco de Dados em
+conjunto com aulas preparadas em Notebooks Jupyter que podem ser executados
+na plataforma Google Colaboratory.
+
+Fonte: https://github.com/chcorreia/VentoNorte
+
+## SCRIPTS SQL
+
+Os scripts de criação do banco para MySQL ou PostgreSQL estão :
+- [mysql/ventonorte_mysql.sql](mysql/ventonorte_mysql.sql)
+- [postgres/ventonorte_postgres.sql](postgres/ventonorte_postgres.sql)
+
+ONDE ENCONTRAR O BANCO ORIGINAL EM INGLÊS
+
+A versão oficial da Microsoft encontra sem
+https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/readme.md
+
+Esse trabalho foi baseado na versão do banco Northwind Traders para PostgreSQL 
+que pode ser encontrada em https://github.com/pthom/northwind_psql.
+
+Uma versão em Inglês do banco Nortwind Traders para MySQL pode ser encontrada em
+https://github.com/dalers/mywind
 
