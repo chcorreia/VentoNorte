@@ -24,7 +24,14 @@ Os scripts de criação do banco para MySQL ou PostgreSQL estão :
 - [mysql/ventonorte_mysql.sql](mysql/ventonorte_mysql.sql)
 - [postgres/ventonorte_postgres.sql](postgres/ventonorte_postgres.sql)
 
-ONDE ENCONTRAR O BANCO ORIGINAL EM INGLÊS
+## Diagrama de Entidades e Relacionamentos
+
+[Diagrama do banco de dados VentoNorte](ventonorte.png)
+
+Você pode encontrar o DER desse banco em 
+https://dbdiagram.io/d/VentoNorte-67a9153e263d6cf9a08b0509
+
+## Onde encontrar o banco original em Inglês
 
 A versão oficial da Microsoft encontra sem
 https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/readme.md
