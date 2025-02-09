@@ -4,12 +4,12 @@ Esse banco é uma versão traduzida e convertida para o PostgresSQL do famoso
 banco "Northwind Traders" criado pela Microsoft para treinamento dos seus 
 bancos de dados (Access, MS SQL Server).
 
-## A EMPRESA
+## A empresa (imaginária)
 
-A empresa "Vento Norte" é ume empresa fictícia que comercializa especialidades 
+A empresa "Vento Norte Comerciantes Ltda." é ume empresa fictícia que comercializa especialidades 
 culinárias do mundo inteiro para distribuidores espalhados pelo mundo.
 
-## SOBRE A TRADUÇÃO/ADAPTAÇÃO
+## Sobre a tradução/adaptação
 
 Essa tradução foi feita pelo prof. Carlos H Correia (chcorreia@gmail.com)
 para ser usada como ferramenta de auxílio nas aulas de Banco de Dados em
@@ -18,7 +18,7 @@ na plataforma Google Colaboratory.
 
 Fonte: https://github.com/chcorreia/VentoNorte
 
-## SCRIPTS SQL
+## Scripts SQL
 
 Os scripts de criação do banco para MySQL ou PostgreSQL estão :
 - [mysql/ventonorte_mysql.sql](mysql/ventonorte_mysql.sql)
