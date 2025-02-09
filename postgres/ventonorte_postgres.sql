@@ -29,17 +29,6 @@ que pode ser encontrada em https://github.com/pthom/northwind_psql.
 
 ----------------------------------------------------------------------------*/
 
---
--- Essas opções vieram do original e deixei inalteradas
---
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
 -- 
 -- Se você quiser que esse banco seja criado em um SCHEMA específico
 -- só precisa alterar aqui. Removi todas as referências explícitas ao
