@@ -1,0 +1,145 @@
+Table "cliente" {
+  "id" varchar(5) [pk, not null]
+  "empresa" varchar(40) [not null]
+  "nome_contato" varchar(40)
+  "titulo_contato" varchar(40)
+  "endereco" varchar(60)
+  "cidade" varchar(30)
+  "regiao" varchar(30)
+  "cod_postal" varchar(10)
+  "pais" varchar(30)
+  "fone1" varchar(24)
+  "fone2" varchar(24)
+}
+
+Table "fornecedor" {
+  "id" int4 [pk, not null]
+  "empresa" varchar(40) [not null]
+  "nome_contato" varchar(40)
+  "titulo_contato" varchar(40)
+  "endereco" varchar(60)
+  "cidade" varchar(30)
+  "regiao" varchar(30)
+  "cod_postal" varchar(10)
+  "pais" varchar(30)
+  "fone1" varchar(24)
+  "fone2" varchar(24)
+  "website" text
+}
+
+Table "vendedor" {
+  "id" int4 [pk, not null]
+  "titulo" varchar(40)
+  "titulo_de_cortesia" varchar(25)
+  "data_nasc" date
+  "data_contrato" date
+  "endereco" varchar(60)
+  "cidade" varchar(30)
+  "regiao" varchar(30)
+  "cod_postal" varchar(10)
+  "pais" varchar(30)
+  "fone" varchar(24)
+  "ramal" varchar(4)
+  "foto" bytea
+  "obs" text
+  "id_chefe" int4
+  "foto_arq" varchar(255)
+  "nome" varchar(100)
+}
+
+Table "regiao" {
+  "id" int4 [pk, not null]
+  "descricao" varchar(60) [not null]
+}
+
+Table "area" {
+  "id" numeric [pk, not null]
+  "area" varchar(60) [not null]
+  "id_regiao" int4 [not null]
+}
+
+Table "area_vendedor" {
+  "id_vendedor" int4 [not null]
+  "id_area" numeric [not null]
+
+  Indexes {
+    (id_vendedor, id_area) [type: btree, name: "area_vendedor_pkey"]
+  }
+}
+
+Table "categoria" {
+  "id" int4 [pk, not null]
+  "categoria" varchar(30) [not null]
+  "descricao" text
+  "imagem" bytea
+}
+
+Table "produto" {
+  "id" int4 [pk, not null]
+  "produto" varchar(40) [not null]
+  "id_fornecedor" int4
+  "id_categoria" int4
+  "quant_por_unid" varchar(30)
+  "preco_unid" numeric(8,2)
+  "unids_estoque" int4
+  "unids_pedido" int4
+  "estoque_min" int4
+  "esgotado" bool [not null, default: false]
+}
+
+Table "transportadora" {
+  "id" int4 [pk, not null]
+  "transportadora" varchar(40) [not null]
+  "fone" varchar(24)
+}
+
+Table "pedido" {
+  "id" int4 [pk, not null]
+  "id_cliente" varchar(5)
+  "id_vendedor" int4
+  "data_pedido" date
+  "data_prometido" date
+  "data_enviado" date
+  "id_transp" int4
+  "valor_frete" numeric(8,2)
+  "envio_nome" varchar(40)
+  "envio_endereco" varchar(60)
+  "envio_cidade" varchar(30)
+  "envio_regiao" varchar(30)
+  "envio_cod_postal" varchar(10)
+  "envio_pais" varchar(30)
+}
+
+Table "item_pedido" {
+  "id_pedido" int4 [not null]
+  "id_produto" int4 [not null]
+  "preco_unit" numeric(8,2) [not null]
+  "quant" int4 [not null]
+  "perc_desconto" float4 [not null]
+
+  Indexes {
+    (id_pedido, id_produto) [type: btree, name: "item_pedido_pkey"]
+  }
+}
+
+Ref "area_id_regiao_fkey":"regiao"."id" < "area"."id_regiao"
+
+Ref "area_vendedor_id_area_fkey":"area"."id" < "area_vendedor"."id_area"
+
+Ref "area_vendedor_id_vendedor_fkey":"vendedor"."id" < "area_vendedor"."id_vendedor"
+
+Ref "item_pedido_id_pedido_fkey":"pedido"."id" < "item_pedido"."id_pedido"
+
+Ref "item_pedido_id_produto_fkey":"produto"."id" < "item_pedido"."id_produto"
+
+Ref "pedido_id_cliente_fkey":"cliente"."id" < "pedido"."id_cliente"
+
+Ref "pedido_id_transp_fkey":"transportadora"."id" < "pedido"."id_transp"
+
+Ref "pedido_id_vendedor_fkey":"vendedor"."id" < "pedido"."id_vendedor"
+
+Ref "produto_id_categoria_fkey":"categoria"."id" < "produto"."id_categoria"
+
+Ref "produto_id_fornecedor_fkey":"fornecedor"."id" < "produto"."id_fornecedor"
+
+Ref "vendedor_id_chefe_fkey":"vendedor"."id" < "vendedor"."id_chefe"
