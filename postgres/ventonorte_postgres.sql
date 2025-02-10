@@ -3666,6 +3666,6 @@ call ajusta_datas(CURRENT_DATE);
 
 
 --
--- FIM DO BANCO VENTONORTE.SQL
--- (você perdeu o jogo)
+-- FIM DO ARQUIVO VENTONORTE_POSTGRES.SQL
+-- (você perdeu O Jogo)
 --

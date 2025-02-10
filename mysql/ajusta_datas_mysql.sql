@@ -22,10 +22,9 @@ DELIMITER // -- Define o delimitador para evitar conflito com o ponto e vírgula
 CREATE PROCEDURE ajusta_datas(data_base DATE)
 BEGIN
     DECLARE max_data DATE;
-    DECLARE dias_dif INT; -- INTEGER em MySQL é INT
-
+    DECLARE dias_dif INT; 
     IF data_base IS NULL THEN
-        SET data_base = CURRENT_DATE(); -- CURRENT_DATE em MySQL é CURRENT_DATE()
+        SET data_base = CURRENT_DATE(); 
     END IF;
 
     -- Obtém a data do pedido mais recente
@@ -33,11 +32,11 @@ BEGIN
 
     -- Calcula a diferença em dias entre a data mais recente e hoje
     IF max_data IS NOT NULL THEN
-        SET dias_dif = DATEDIFF(CURRENT_DATE(), max_data); -- Função DATEDIFF para calcular a diferença em dias
+        SET dias_dif = DATEDIFF(CURRENT_DATE(), max_data); 
 
         -- Ajusta os pedidos pela diferença calculada
         UPDATE pedido
-        SET data_pedido = DATE_ADD(data_pedido, INTERVAL dias_dif DAY), -- DATE_ADD para adicionar dias
+        SET data_pedido = DATE_ADD(data_pedido, INTERVAL dias_dif DAY),
             data_prometido = DATE_ADD(data_prometido, INTERVAL dias_dif DAY),
             data_enviado = DATE_ADD(data_enviado, INTERVAL dias_dif DAY);
 
@@ -47,17 +46,18 @@ BEGIN
             data_contrato = DATE_ADD(data_contrato, INTERVAL dias_dif DAY);
 
         -- Uhul
-        SELECT CONCAT('Pedido mais recente ajustado para ', data_base, '. Todas as datas foram atualizadas.');
+        SELECT CONCAT('Pedido mais recente ajustado para ', data_base, '. Todas as datas foram atualizadas.') as SUCESSO;
     ELSE
-        SELECT 'Nenhum pedido encontrado. Nenhuma atualização realizada.';
+        SELECT 'Nenhum pedido encontrado. Nenhuma atualização realizada.' as ERRO;
     END IF;
 END // -- Fim da procedure
 
 DELIMITER ; -- Volta ao delimitador padrão
 
 -- AJUSTA AS DATAS PARA A DATA DA INSTALAÇÃO
-CALL ajusta_datas(CURRENT_DATE()); -- Para chamar a procedure em MySQL, use CALL
+CALL ajusta_datas(CURRENT_DATE()); 
 
 --
--- FIM
+-- FIM DO ARQUIVO VENTONORTE_MYSQL.SQL
+-- (você perdeu O Jogo)
 --

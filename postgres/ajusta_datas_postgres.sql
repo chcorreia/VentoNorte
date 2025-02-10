@@ -62,5 +62,5 @@ $$;
 call ajusta_datas(CURRENT_DATE);
 
 --
--- FIM
+-- FIM 
 --
