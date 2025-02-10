@@ -58,6 +58,5 @@ DELIMITER ; -- Volta ao delimitador padrão
 CALL ajusta_datas(CURRENT_DATE()); 
 
 --
--- FIM DO ARQUIVO VENTONORTE_MYSQL.SQL
--- (você perdeu O Jogo)
+-- FIM
 --
