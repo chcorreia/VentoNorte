@@ -3639,9 +3639,9 @@ BEGIN
     -- Obtém a data do pedido mais recente
     SELECT MAX(data_pedido) INTO max_data FROM pedido;
 
-    -- Calcula a diferença em dias entre a data mais recente e hoje
+    -- Calcula a diferença em dias entre a data mais recente e a data escolhida
     IF max_data IS NOT NULL THEN
-        SET dias_dif = DATEDIFF(CURRENT_DATE(), max_data); 
+        SET dias_dif = DATEDIFF(data_base, max_data); 
 
         -- Ajusta os pedidos pela diferença calculada
         UPDATE pedido

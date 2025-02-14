@@ -35,9 +35,9 @@ BEGIN
     INTO max_data 
     FROM pedido;
 
-    -- Calcula a diferença em dias entre a data mais recente e hoje
+    -- Calcula a diferença em dias entre a data mais recente e a data escolhida
     IF max_data IS NOT NULL THEN
-        dias_dif := CURRENT_DATE - max_data;
+        dias_dif := data_base - max_data;
 
         -- Ajusta os pedidos pela diferença calculada
         UPDATE pedido
